@@ -12,30 +12,43 @@ public class CalcController {
     public CalcController(CalcModel model, CalcView view) {
         m_model = model;
         m_view = view;
-// Registra las acciones al hacer clic en los botones
+
         m_view.addMultiplyListener(new MultiplyListener());
+         m_view.addSumaListener(new SumaListener());
         m_view.addClearListener(new ClearListener());
     }
-/*lógica cuando se presiona el botón "Multiply"*/
+   
     class MultiplyListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String userInput = "";
             try {
-                /* obtiene el texto ingresado por el usuario desde la Vista*/ 
+                /*obtiene el texto ingresado por el usuario desde la Vista*/ 
                 userInput = m_view.getUserInput();
-                m_model.multiplyBy(userInput); /*Le ordena al Modelo que multiplique el total por ese texto*/
-                m_view.setTotal(m_model.getValue()); // obtiene el resultado actualizado del Modelo y se lo manda a la Vista para que lo muestre
+                m_model.multiplyBy(userInput); 
+                m_view.setTotal(m_model.getValue()); 
             } catch (NumberFormatException nfex) {
-                /* Captura el error he imprime*/ 
+                
                 m_view.showError("Bad input: '" + userInput + "'");
             }
         }
     } 
+       class SumaListener implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+        String userInput = "";
+        try {
+            userInput = m_view.getUserInput();
+            m_model.addBy(userInput); // Llama al método de suma del modelo
+            m_view.setTotal(m_model.getValue());
+        } catch (NumberFormatException nfex) {
+            m_view.showError("Bad input: '" + userInput + "'");
+        }
+    }
+}
 //maneja la lógica cuando se presiona el botón "Clear"
     class ClearListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            m_model.reset(); // Reinicia los datos en el Modelo
-            m_view.reset(); // Reinicia la interfaz visual en la Vista
+            m_model.reset(); 
+            m_view.reset(); 
         }
     }
 }

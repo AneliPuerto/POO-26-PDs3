@@ -1,35 +1,48 @@
 package modelo;
-
-import java.math.BigDecimal; 
+import java.math.BigDecimal;
 
 public class CalcModel {
-
-    private static final String INITIAL_VALUE = "1";
-    private BigDecimal m_total; /*Variable que almacena el total actual de la calculadora */
-
-    /*private boolean esPrimerValor = true; Bandera para saber si es la primera operación */
-//constructor
+    private static final String INITIAL_VALUE = "0"; // Iniciamos en 0 para que la suma funcione bien al arrancar
+    private BigDecimal m_total;
+    private boolean m_primeraOperacion = true; // Bandera para saber si es la primera operación
 
     public CalcModel() {
-        reset(); 
+        reset();
     }
-   
 
     public void reset() {
-        m_total = new BigDecimal(INITIAL_VALUE); /*regrsa al valor 1.0 */
-        
+        m_total = new BigDecimal(INITIAL_VALUE);
+        m_primeraOperacion = true;
     }
 
-    public void multiplyBy(String operand) { /*El metodo multiplica el total actual por el número ingresado cadena */
-        m_total = m_total.multiply(new BigDecimal(operand)); //convierte a bigdecimal  y realisa la multi.
-      
+
+    // Función para sumar//
+    public void addBy(String operand) {
+        BigDecimal numeroIngresado = new BigDecimal(operand);
+        if (m_primeraOperacion) {
+            m_total = numeroIngresado; 
+            m_primeraOperacion = false;
+        } else {
+            m_total = m_total.add(numeroIngresado); // Suma acumulativa
+        }
     }
 
-    public void setValue(String value) { //asigna valor especificvo convirtiendo de texto a bigdeci//
+    // Función para multiplicar
+    public void multiplyBy(String operand) {
+        BigDecimal numeroIngresado = new BigDecimal(operand); 
+        if (m_primeraOperacion) {
+            m_total = numeroIngresado; 
+            m_primeraOperacion = false;
+        } else {
+            m_total = m_total.multiply(numeroIngresado); // Multiplicación acumulativa
+        }
+    }
+
+    public void setValue(String value) {
         m_total = new BigDecimal(value);
     }
 
-    public String getValue() { // Devuelve el valor actual del total convertido a String para que la vista pueda mostrarlo
+    public String getValue() {
         return m_total.toString();
     }
 }
