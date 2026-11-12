@@ -7,10 +7,11 @@ import java.awt.event.ActionListener; /*botones eventos*/
 public class CalcView extends JFrame {
     private static final String INITIAL_VALUE = "0";
 
-    private JTextField m_userInputTf = new JTextField(5); //cuadro del input (lo que se ingresa)
-    private JTextField m_totalTf = new JTextField(20); //cuadro donde se muestra el total
-    private JButton m_multiplyBtn = new JButton("Multiply"); /*boton de multiplicar */
-    private JButton m_clearBtn = new JButton("Clear"); /*boton de limpiar*/
+    private JTextField m_userInputTf = new JTextField(5); 
+    private JTextField m_totalTf = new JTextField(20); 
+    private JButton m_multiplyBtn = new JButton("Multiply"); 
+    private JButton m_sumaBtn = new JButton("Suma"); 
+    private JButton m_clearBtn = new JButton("Clear"); 
     
     private CalcModel m_model;
 
@@ -19,37 +20,37 @@ public class CalcView extends JFrame {
     public CalcView(CalcModel model) {
         m_model = model;
        
-        m_totalTf.setText(INITIAL_VALUE); /*muestra el 0 al inicio */
-        m_totalTf.setEditable(false); // Hace que el campo sea de solo lectura
+        m_totalTf.setText(INITIAL_VALUE); 
+        m_totalTf.setEditable(false); 
 
 
         // Configura el panel principal 
         JPanel content = new JPanel(); 
-        content.setLayout(new FlowLayout()); /* organiza los elementos en línea horizontal*/
-       
+        content.setLayout(new FlowLayout()); 
 
         // Añade los componentes visuales en el orden de la interfaz
         content.add(new JLabel("Input"));
         content.add(m_userInputTf);
         content.add(m_multiplyBtn);
+        content.add(m_sumaBtn);
         content.add(new JLabel("Total"));
         content.add(m_totalTf);
         content.add(m_clearBtn);
-// Configuración final de la ventana (JFrame)
+
         this.setContentPane(content);
-        this.pack(); // Ajusta la ventana al tamaño de sus componentes
-        this.setTitle("Calculadora"); // Título de la ventana
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra el programa al pulsar la 'X'
+        this.pack(); 
+        this.setTitle("Calculadora"); 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
     }
-// Restablece el campo de texto del total a su valor inicial visual
+
     public void reset() {
         m_totalTf.setText(INITIAL_VALUE);
     }
-// Obtiene y devuelve el texto que el usuario escribió en el campo "Input"
+
     public String getUserInput() {
         return m_userInputTf.getText();
     }
-// Actualiza el campo de texto "Total" con un nuevo valor recibido por parámetro
+
     public void setTotal(String newTotal) {
         m_totalTf.setText(newTotal);
     }
@@ -57,11 +58,14 @@ public class CalcView extends JFrame {
     public void showError(String errMessage) {
         JOptionPane.showMessageDialog(this, errMessage);
     }
-// para el botón de multiplicar
+
     public void addMultiplyListener(ActionListener mal) {
         m_multiplyBtn.addActionListener(mal);
     }
-// para al botón de limpiar (clic)
+     public void addSumaListener(ActionListener sal) {
+    m_sumaBtn.addActionListener(sal);
+    }
+
     public void addClearListener(ActionListener cal) {
         m_clearBtn.addActionListener(cal);
     }
